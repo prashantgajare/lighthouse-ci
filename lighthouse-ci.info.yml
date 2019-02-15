@@ -1,0 +1,6 @@
+name: Lighthouse CI
+description: Integration of the Integration of Lighthouse and Travis CI
+package: Custom
+
+type: module
+core: 8.x
