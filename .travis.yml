@@ -46,6 +46,7 @@ install:
   #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
 
 after_success:
+  - cd $HOME/www/modules/lighthouse-ci
   - npm run lh
 
 script:
