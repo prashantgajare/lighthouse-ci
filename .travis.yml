@@ -56,7 +56,8 @@ script:
       cd ../../..;
       pwd;
       ls -al;
-      cd $HOME/www/sites/all;
+      cd $HOME/www/sites;
+      ls -al;
       sudo cp -R ./lighthouse-ci $HOME/www/sites/all/modules;
       php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci;
     fi
