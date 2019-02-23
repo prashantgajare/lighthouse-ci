@@ -47,6 +47,8 @@ install:
 
 after_success:
   - cd $HOME/www/modules/lighthouse-ci
+  - ls -al
+  - node cache clean --force && rm -rf node_modules && rm ./package-lock.json && npm install
   - npm run lh
 
 script:
