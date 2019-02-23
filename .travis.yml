@@ -40,7 +40,7 @@ before_script:
   - git config --global user.email "$GIT_EMAIL"
 
 install: 
-  - composer install
+  #- composer install
   - npm install
   #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
 
