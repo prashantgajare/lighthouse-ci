@@ -2,11 +2,14 @@ sudo: false
 
 language: php
 
+dist: trusty
+
 php:
   - 7.1
 
 env:
   - MAKE_FILE=drupal-8.6.x.make.yml
+  - NOTE_RELEASE=7.x
 
 services:
   - mysql
@@ -28,13 +31,27 @@ before_install:
   - wget -P ~/ https://github.com/drush-ops/drush/releases/download/8.0.0-rc3/drush.phar && chmod +x ~/drush.phar
   - php ~/drush.phar make $TRAVIS_BUILD_DIR/.travis/$MAKE_FILE $HOME/www
   - php ~/drush.phar --root=$HOME/www --yes site-install --account-pass=admin --db-url=mysql://root:@127.0.0.1/drupal0 testing
-  - cd $HOME/www/testing
-  - pwd
+  - apt-get install -y nodejs
+
+before_script:
+  - DIST_PATH=$TRAVIS_BUILD_DIR/dist
+  - REPO_URL=https://$SECURE_TOKEN@$GIT_DOMAIN/$TRAVIS_REPO_SLUG.git
+  - git config --global user.name "$GIT_NAME"
+  - git config --global user.email "$GIT_EMAIL"
 
 install: 
-  - php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
+  - composer install
+  - npm install
+  #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
 
-after_success: 
+after_success:
+  - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then
+      cd $DIST_PATH;
+      git clone $REPO_URL;
+      cd $DIST_PATH && git checkout master && git pull origin master;
+      cp lighthouse-ci $HOME/www/sites/all/modules/;
+      php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
+    fi
 
 script:
   - cd ~/www && php ./core/scripts/run-tests.sh --suppress-deprecations --verbose --keep-results --color --concurrency 4 --php `which php` --sqlite /tmp/test.sqlite --url http://localhost:8080 --module deploy | tee /tmp/test.log ; export STATUS_SCRIPT=${PIPESTATUS[0]}
