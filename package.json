@@ -1,3 +1,12 @@
-"scripts": {
-  "lh": "lighthousebot"
+{
+	"name": "lighthouse-ci",
+	"license": "",
+	"devDependencies": {
+		"bower": "^1.8.4",
+		"lighthouse-ci": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
+	},
+	"scripts": {
+		"bower_install": "bower install",
+		"lh": "lighthouse-ci --score=96 --runner=wpt"
+	}
 }

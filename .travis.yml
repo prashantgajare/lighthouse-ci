@@ -39,10 +39,9 @@ before_script:
   - git config --global user.name "$GIT_NAME"
   - git config --global user.email "$GIT_EMAIL"
 
-install: 
+install:
   #- composer install
-  - npm install
-  - npm i --save-dev https://github.com/GoogleChromeLabs/lighthousebot
+  #- npm i --save-dev https://github.com/GoogleChromeLabs/lighthousebot
   #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
 
 after_success:
