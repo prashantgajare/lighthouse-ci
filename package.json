@@ -1,12 +1,16 @@
 {
 	"name": "lighthouse-ci",
-	"license": "",
+	"license": "MIT",
+	"repository": {
+    	"type": "git",
+    	"url": "git+https://github.com/GoogleChromeLabs/lighthousebot.git"
+  	},
 	"devDependencies": {
 		"bower": "^1.8.4",
-		"lighthouse-ci": "git+https://github.com/GoogleChromeLabs/lighthousebot.git",
+		"lighthouse-ci": "",
 	},
 	"scripts": {
 		"bower_install": "bower install",
-		"lh": "lighthouse-ci --score=96 --runner=wpt"
+		"lh": "lighthouse-ci http://localhost:8080 --score=75"
 	}
 }

@@ -46,7 +46,7 @@ install:
   #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
 
 after_success:
-  - npm run lh -- --perf=96 --runner=chrome https://localhost:8080
+  - npm run lh
 
 script:
   - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then
