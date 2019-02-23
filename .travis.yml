@@ -55,6 +55,8 @@ script:
       cd lighthouse-ci && git checkout master && git pull origin master;
       cd ../../..;
       ls -al;
-      sudo cp -R ./lighthouse-ci $HOME/www/modules;
+      sudo cp lighthouse-ci $HOME/www/modules;
+      cd $HOME/www/modules;
+      ls -al;
       php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci;
     fi
