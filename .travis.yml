@@ -61,5 +61,6 @@ script:
       cd lighthouse-ci;
       ls -al;
       cd $HOME/www;
+      ls -al;
       php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci;
     fi
