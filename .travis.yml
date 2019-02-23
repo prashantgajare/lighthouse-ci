@@ -34,6 +34,7 @@ before_install:
   - sudo apt-get install -y nodejs
 
 before_script:
+  - cd $TRAVIS_BUILD_DIR && mkdir dist
   - DIST_PATH=$TRAVIS_BUILD_DIR/dist
   - REPO_URL=https://$SECURE_TOKEN@$GIT_DOMAIN/$TRAVIS_REPO_SLUG.git
   - git config --global user.name "$GIT_NAME"
