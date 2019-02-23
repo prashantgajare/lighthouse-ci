@@ -52,7 +52,8 @@ script:
   - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then
       cd $DIST_PATH;
       git clone $REPO_URL;
-      git checkout master && git pull origin master;
+      ls -al;
+      cd lighthouse-ci && git checkout master && git pull origin master;
       pwd;
       echo $HOME/www/sites/all/modules;
       cp lighthouse-ci $HOME/www/sites/all/modules;
