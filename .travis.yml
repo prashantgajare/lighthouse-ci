@@ -2,8 +2,17 @@ sudo: required
 dist: trusty
 
 language: php
+
+services:
+  - mysql
+
+addons:
+  apt:
+    packages:
+      - nginx
+
 php:
-  - 7
+  - 7.2
   - hhvm
 
 matrix:
@@ -19,9 +28,12 @@ before_install:
   - sudo apt-get install -y nodejs
 
 install:
-  - composer install
   - npm install
 
 script:
   - bin/phpunit
   - npm test
+
+cache:
+  directories:
+    - $HOME/.drush/cache/download
