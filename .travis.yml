@@ -1,61 +1,27 @@
-sudo: true
-
-language: php
-
+sudo: required
 dist: trusty
 
+language: php
 php:
-  - 7.1
+  - 7
+  - hhvm
+
+matrix:
+  allow_failures:
+    - php: hhvm
 
 env:
-  - MAKE_FILE=drupal-8.6.x.make.yml
+  - NODE_RELEASE=6.x
   - NOTE_RELEASE=7.x
 
-services:
-  - mysql
-
-addons:
-  apt:
-    packages:
-    - nginx
-
-cache:
-  directories:
-  - $HOME/.drush/cache/download
-
 before_install:
-  - cp $TRAVIS_BUILD_DIR/.travis/php.ini ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/
-  - cp $TRAVIS_BUILD_DIR/.travis/php-fpm.conf ~/.phpenv/versions/$(phpenv version-name)/etc/
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
-  - nginx -c $TRAVIS_BUILD_DIR/.travis/nginx.conf
-  - wget -P ~/ https://github.com/drush-ops/drush/releases/download/8.0.0-rc3/drush.phar && chmod +x ~/drush.phar
-  - php ~/drush.phar make $TRAVIS_BUILD_DIR/.travis/$MAKE_FILE $HOME/www
-  - php ~/drush.phar --root=$HOME/www --yes site-install --account-pass=admin --db-url=mysql://root:@127.0.0.1/drupal0 testing
+  - sudo rm -rf ~/.nvm - curl -sL "https://deb.nodesource.com/setup_${NODE_RELEASE}" | sudo -E bash -
   - sudo apt-get install -y nodejs
 
-before_script:
-  - cd $TRAVIS_BUILD_DIR && mkdir dist
-  - DIST_PATH=$TRAVIS_BUILD_DIR/dist
-  - REPO_URL=https://$SECURE_TOKEN@$GIT_DOMAIN/$TRAVIS_REPO_SLUG.git
-  - git config --global user.name "$GIT_NAME"
-  - git config --global user.email "$GIT_EMAIL"
-
 install:
-  #- composer install
-  - npm i --save-dev https://github.com/GoogleChromeLabs/lighthousebot
-  #- php ~/drush.phar --root=$HOME/www --yes --uri=http://localhost:8080 en lighthouse-ci
-
-after_success:
-  - cd $HOME/www/modules/lighthouse-ci
-  - ls -al
-  - node cache clean --force && rm -rf node_modules && rm ./package-lock.json && npm install
-  - npm run lh
+  - composer install
+  - npm install
 
 script:
-  - if [[ $TRAVIS_BRANCH == "master" ]] && [[ $TRAVIS_PULL_REQUEST == "false" ]]; then
-      cd $DIST_PATH;
-      git clone $REPO_URL;
-      cd lighthouse-ci && git checkout master && git pull origin master;
-      cd ../../..;
-      sudo cp -r lighthouse-ci $HOME/www/modules;
-    fi
+  - bin/phpunit
+  - npm test
