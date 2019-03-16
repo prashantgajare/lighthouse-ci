@@ -12,7 +12,4 @@
     "node": "6.9.x"
   },
   "license": "MIT",
-  "keywords": [
-    "node",
-  ]
 }
