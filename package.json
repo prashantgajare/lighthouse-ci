@@ -1,14 +1,16 @@
 {
-  "name": "lighthouse-ci",
-  "version": "0.0.1",
-  "description": "An example of lighthouse-ci",
-  "scripts": {
-    "lh": "lighthouse-ci"
-  },
-  "devDependencies": {
-    "lighthouse-ci": "git+https://github.com/ebidel/lighthouse-ci.git"
-  },
-  "engines": {
-    "node": "6.9.x"
-  }
+	"name": "lighthouse-ci",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GoogleChromeLabs/lighthousebot.git"
+    },
+	"devDependencies": {
+		"bower": "^1.8.4",
+		"lighthouse-ci": "git+https://github.com/GoogleChromeLabs/lighthousebot.git"
+	},
+	"scripts": {
+		"bower_install": "bower install",
+		"lh": "lighthouse-ci https://www.pfizerpro.co.uk --score=75"
+	}
 }
