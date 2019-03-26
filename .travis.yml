@@ -20,14 +20,20 @@ matrix:
     - php: hhvm
 
 env:
+  - MAKE_FILE=drupal-8.6.x.make.yml
   - NODE_RELEASE=6.x
   - NODE_RELEASE=7.x
+
+cache:
+  directories:
+  - $HOME/.drush/cache/download
 
 before_install:
   - sudo apt-get install -y nodejs
 
 install:
-  - npm install
+  #- npm install
+  - npm i --save-dev https://github.com/GoogleChromeLabs/lighthousebot
 
 script:
   - bin/phpunit
